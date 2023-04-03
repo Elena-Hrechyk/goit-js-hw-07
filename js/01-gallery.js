@@ -37,14 +37,17 @@ function onOpenBigImg(event) {
       original === galleryList.closest(".gallery__image").dataset.source
   );
 
-  const instance = basicLightbox.create(`
-      <img src="${currentImg.original}" alt="${currentImg.description}">
-  `);
-  instance.show();
+  const instance = basicLightbox.create(
+    `<img src="${currentImg.original}" alt="${currentImg.description}">`
+  );
 
-  gallery.addEventListener("keydown", (evt) => {
+  function clickEscCloseModal(evt) {
     if (evt.code === "Escape") {
       instance.close();
+      gallery.removeEventListener("keydown", clickEscCloseModal);
     }
-  });
+  }
+  instance.show();
+
+  gallery.addEventListener("keydown", clickEscCloseModal);
 }
