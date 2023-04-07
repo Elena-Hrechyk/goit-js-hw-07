@@ -38,13 +38,18 @@ function onOpenBigImg(event) {
   );
 
   const instance = basicLightbox.create(
-    `<img src="${currentImg.original}" alt="${currentImg.description}">`
+    `<img src="${currentImg.original}" alt="${currentImg.description}">`,
+    {
+      onClose() {
+        gallery.removeEventListener("keydown", clickEscCloseModal);
+      },
+    }
   );
 
   function clickEscCloseModal(evt) {
+    console.log("Key");
     if (evt.code === "Escape") {
       instance.close();
-      gallery.removeEventListener("keydown", clickEscCloseModal);
     }
   }
   instance.show();
